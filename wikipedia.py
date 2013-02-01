@@ -47,15 +47,12 @@ WIKI_REQUEST_URL = ("http://en.wikipedia.org/w/api.php?action=parse&prop=text"
 
 class WikipediaAPI(object):
 
-    # Initialize the object
     def init(self):
         pass
 
-    # Handle crappy python string stuff
     def smart_str(self, text):
         return unicode(text).encode("utf-8")
 
-    # Method to determine what constitutes "visible text"
     def visible(self, element):
         if element.parent.name is not None:
             visible_elements = ['table', 'ul', 'li', 'tr', 'td', 'style',
@@ -64,7 +61,6 @@ class WikipediaAPI(object):
                 return False
             return True
 
-    # Keyword query to wikipedia
     def query(self, keyword, section=-1):
         # Generate the request url
         request_url = self.smart_str(WIKI_REQUEST_URL + keyword)
@@ -131,17 +127,13 @@ class WikipediaAPI(object):
         # Clean up multiple spaces
         textblob = " ".join(textblob.split())
 
-        # Return UTF-8 formatted text
         return unicode(textblob).encode("utf-8")
 
 
 def cli():
     if len(sys.argv) > 1:
         wiki = WikipediaAPI()
-
-        # Default behavior is to print the query
         print wiki.query("".join(sys.argv[1:]), 0)
-
     else:
         print "Usage: ./" + sys.argv[0] + " \"keyword string here\""
 
